@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/index.css">
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <title>MP3 Player</title>
+</head>
+<body>
+  <div class="main">
+
+    <!-- top bar -->
+    <div class="top_bar">
+      <button onclick="volumeTray()"><i class="bx bx-volume-full"></i></button>
+      <div class="volume">
+        <div class="volume_bar">
+          <p id="volume_level">70%</p>
+          <input id="volume_slider" type="range" min="0" max="100" value="70" class="slider">
+          <i id="mute_icon" data-vol="70" class="bx bx-volume-mute"></i>
+        </div>
+      </div>
+      <button onclick="playerListToggle()"><i id='menu_icon' class="bx bx-music"></i></button>
+    </div>
+ 
+
+    <!------ player screen ------->
+    <section id="player-screen">
+
+      <!-- player image -->
+      <div class="image">
+        <div class="img">
+          <img id="p_img" src="./media/img/music-note.png" alt="default img">
+        </div>
+      </div>
+    </section>
+
+    <!------ playlist songs ------>
+    <section>
+      <div class="playlist active">
+
+        <div id="0" class="song_card">
+          <img class="thumbnail" src="" alt="thumbnail image">
+          <div class="card_text">
+            <p id="p_title">song name</p>
+            <p id="p_artist">artist name</p>
+          </div>
+          <button><i class='bx bx-play'></i></button>
+        </div>
+  
+        <div id="1" class="song_card">
+          <img class="thumbnail" src="" alt="thumbnail image">
+          <div class="card_text">
+            <p id="p_title">song name</p>
+            <p id="p_artist">artist name</p>
+          </div>
+          <button><i class='bx bx-play'></i></button>
+        </div>
+  
+        <div id="2" class="song_card">
+          <img class="thumbnail" src="" alt="thumbnail image">
+          <div class="card_text">
+            <p id="p_title">song name</p>
+            <p id="p_artist">artist name</p>
+          </div>
+          <button><i class='bx bx-play'></i></button>
+        </div>
+  
+        <div id="3" class="song_card">
+          <img class="thumbnail" src="" alt="thumbnail image">
+          <div class="card_text">
+            <p id="p_title">song name</p>
+            <p id="p_artist">artist name</p>
+          </div>
+          <button><i class='bx bx-play'></i></button>
+        </div>
+  
+        <div id="4" class="song_card">
+          <img class="thumbnail" src="" alt="thumbnail image">
+          <div class="card_text">
+            <p id="p_title">song name</p>
+            <p id="p_artist">artist name</p>
+          </div>
+          <button><i class='bx bx-play'></i></button>
+        </div>
+  
+      </div>
+    </section>
+  </div>
+
+  <!------  javascript for UI only ------>
+  <script>
+    let playlist = document.querySelector('.playlist');
+    let volume = document.querySelector('.volume');
+    let menuIcon = document.getElementById('menu_icon');
+    let volumeLevel = document.getElementById('volume_level');
+
+
+    function playerListToggle() {
+      playlist.classList.toggle('active');
+      if (playlist.classList.contains('active')) {
+        menuIcon.className = '';
+        menuIcon.classList.add('bx');
+        menuIcon.classList.add('bx-music');
+      } else {
+        menuIcon.className = '';
+        menuIcon.classList.add('bx');
+        menuIcon.classList.add('bx-menu-alt-left');
+      }
+    }
+
+    function volumeTray() {
+      volume.classList.toggle('vol_slider_open');
+    }
+  </script>
+</body>
+</html>
