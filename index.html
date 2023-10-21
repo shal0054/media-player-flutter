@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/index.css">
-  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <title>MP3 Player</title>
 </head>
 <body>
@@ -33,6 +33,31 @@
           <img id="p_img" src="./media/img/music-note.png" alt="default img">
         </div>
       </div>
+
+      <!-- song info -->
+      <div class="controls">
+        <div class="song_info">
+          <p id="song_title">Song title</p>
+          <p id="artist">Artist name</p>
+        </div>
+
+      <!-- player controls -->
+      <div class="control_buttons">
+        <div class="range_slider">
+          <p id="timer">0:00</p>
+          <input id="slider" type="range" class="slider" min="0" max="100" value="0">
+          <p id="song_length">3:48</p>
+        </div>
+
+        <div class="main_btns">
+          <button id="previous"><i class='bx bx-skip-previous'></i></button>
+          <button id="rewind"><i class='bx bx-rewind'></i></button>
+          <button id="play_pause_btn"><i class='bx bx-play'></i></button>
+          <button id="fast_forward"><i class='bx bx-fast-forward'></i></button>
+          <button id="next"><i class='bx bx-skip-next'></i></button>
+        </div>
+      </div>
+      </div>
     </section>
 
     <!------ playlist songs ------>
@@ -40,7 +65,7 @@
       <div class="playlist active">
 
         <div id="0" class="song_card">
-          <img class="thumbnail" src="" alt="thumbnail image">
+          <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
           <div class="card_text">
             <p id="p_title">song name</p>
             <p id="p_artist">artist name</p>
@@ -49,7 +74,7 @@
         </div>
   
         <div id="1" class="song_card">
-          <img class="thumbnail" src="" alt="thumbnail image">
+          <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
           <div class="card_text">
             <p id="p_title">song name</p>
             <p id="p_artist">artist name</p>
@@ -58,7 +83,7 @@
         </div>
   
         <div id="2" class="song_card">
-          <img class="thumbnail" src="" alt="thumbnail image">
+          <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
           <div class="card_text">
             <p id="p_title">song name</p>
             <p id="p_artist">artist name</p>
@@ -67,7 +92,7 @@
         </div>
   
         <div id="3" class="song_card">
-          <img class="thumbnail" src="" alt="thumbnail image">
+          <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
           <div class="card_text">
             <p id="p_title">song name</p>
             <p id="p_artist">artist name</p>
@@ -76,7 +101,7 @@
         </div>
   
         <div id="4" class="song_card">
-          <img class="thumbnail" src="" alt="thumbnail image">
+          <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
           <div class="card_text">
             <p id="p_title">song name</p>
             <p id="p_artist">artist name</p>
@@ -113,5 +138,6 @@
       volume.classList.toggle('vol_slider_open');
     }
   </script>
+  <audio id="audio"></audio>
 </body>
 </html>
