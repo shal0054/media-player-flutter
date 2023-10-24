@@ -50,11 +50,13 @@ const APP = {
 	playList: null,
 	audio: null,
 	playPauseBtn: null,
-	currentTrack: 0,
+	trackDurationText: null,
+	currentTrack: { id: 0, duration: 0 },
 	init: () => {
 		(APP.playList = document.getElementById('playlist')),
 			(APP.audio = document.getElementById('audio')),
 			(APP.playPauseBtn = document.getElementById('play_pause_btn')),
+			(APP.trackDurationText = document.getElementById('track_duration')),
 			APP.addListeners();
 		APP.buildTrackList();
 	},
@@ -112,14 +114,34 @@ const APP = {
 
 	playTrack: ev => {
 		if (!APP.audio.paused) return; //already playing
-		APP.currentTrack = ev.target.dataset.id;
-		APP.audio.src = TRACKS[APP.currentTrack].src;
-		APP.audio.play();
+		APP.currentTrack.id = ev.target.dataset.id;
+		APP.audio.src = TRACKS[APP.currentTrack.id].src;
+		APP.audio.addEventListener('durationchange', ev => {
+			APP.currentTrack.duration = APP.formatTime(APP.audio.duration);
+			APP.trackDurationText.innerText = APP.currentTrack.duration;
+		});
+		// APP.audio.play();
 		// APP.startAnimations();
 	},
 	pauseTrack: ev => {
 		APP.audio.pause();
 		// APP.stopAnimations();
+	},
+
+	formatTime(seconds) {
+		const SECONDS_PER_HOUR = 3600;
+		const SECONDS_PER_MINUTE = 60;
+
+		let hours = Math.floor(seconds / SECONDS_PER_HOUR);
+		let minutes = Math.floor(
+			(seconds - hours * SECONDS_PER_HOUR) / SECONDS_PER_MINUTE
+		);
+		let sec = seconds - minutes * SECONDS_PER_MINUTE - hours * SECONDS_PER_HOUR;
+
+		minutes = minutes.toString().padStart(2, '0');
+		sec = sec.toString().padStart(2, '0');
+
+		return `${minutes}:${Math.floor(sec)}`;
 	},
 };
 
