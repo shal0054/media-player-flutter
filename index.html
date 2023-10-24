@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <title>MP3 Player</title>
 </head>
+
 <body>
   <div class="main">
 
@@ -22,7 +24,7 @@
       </div>
       <button onclick="playerListToggle()"><i id='menu_icon' class="bx bx-music"></i></button>
     </div>
- 
+
 
     <!------ player screen ------->
     <section id="player-screen">
@@ -41,26 +43,26 @@
           <p id="artist">Artist name</p>
         </div>
 
-      <!-- player controls -->
-      <div class="control_buttons">
-        <div class="range_slider">
-          <p id="timer">0:00</p>
-          <input id="slider" type="range" class="slider" min="0" max="100" value="0">
-          <p id="song_length">3:48</p>
-        </div>
+        <!-- player controls -->
+        <div class="control_buttons">
+          <div class="range_slider">
+            <p id="timer">0:00</p>
+            <input id="slider" type="range" class="slider" min="0" max="100" value="0">
+            <p id="song_length">3:48</p>
+          </div>
 
-        <div class="main_btns">
-          <button id="previous"><i class='bx bx-skip-previous'></i></button>
-          <button id="rewind"><i class='bx bx-rewind'></i></button>
-          <button id="play_pause_btn"><i class='bx bx-play'></i></button>
-          <button id="fast_forward"><i class='bx bx-fast-forward'></i></button>
-          <button id="next"><i class='bx bx-skip-next'></i></button>
+          <div class="main_btns">
+            <button id="previous"><i class='bx bx-skip-previous'></i></button>
+            <button id="rewind"><i class='bx bx-rewind'></i></button>
+            <button id="play_pause_btn"><i class='bx bx-play'></i></button>
+            <button id="fast_forward"><i class='bx bx-fast-forward'></i></button>
+            <button id="next"><i class='bx bx-skip-next'></i></button>
+          </div>
         </div>
-      </div>
       </div>
     </section>
 
-    <!------ playlist songs ------>
+    <!------ playlist screen ------>
     <section>
       <div class="playlist active">
 
@@ -72,7 +74,7 @@
           </div>
           <button><i class='bx bx-play'></i></button>
         </div>
-  
+
         <div id="1" class="song_card">
           <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
           <div class="card_text">
@@ -81,7 +83,7 @@
           </div>
           <button><i class='bx bx-play'></i></button>
         </div>
-  
+
         <div id="2" class="song_card">
           <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
           <div class="card_text">
@@ -90,7 +92,7 @@
           </div>
           <button><i class='bx bx-play'></i></button>
         </div>
-  
+
         <div id="3" class="song_card">
           <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
           <div class="card_text">
@@ -99,7 +101,7 @@
           </div>
           <button><i class='bx bx-play'></i></button>
         </div>
-  
+
         <div id="4" class="song_card">
           <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
           <div class="card_text">
@@ -108,7 +110,7 @@
           </div>
           <button><i class='bx bx-play'></i></button>
         </div>
-  
+
       </div>
     </section>
   </div>
@@ -140,4 +142,5 @@
   </script>
   <audio id="audio"></audio>
 </body>
+
 </html>
