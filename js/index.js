@@ -3,72 +3,119 @@ const TRACKS = [
 		id: 0,
 		artist: '2pac ft. Amr Diab',
 		album: 'Remix',
-		track: "Baby Don't Cry",
-		length: '4:12',
-		path: '/media/songs/2Pac-ft-Amr-Diab-Baby-Dont-Cry-Arabic.mp3',
-		img: '/media/img/2pac.jpg',
+		title: "Baby Don't Cry",
+		duration: '4:12',
+		src: './media/songs/2Pac-ft-Amr-Diab-Baby-Dont-Cry-Arabic.mp3',
+		img: './media/img/2Pac-ft-Amr-Diab-Baby-Dont-Cry-Arabic.jpeg',
 	},
 	{
 		id: 1,
 		artist: 'Elissa',
 		album: 'Remix',
-		track: 'Ahla Donia',
-		length: '3:58',
-		path: 'media/songs/2pac-Elissa-Arabic-Remix-Ahla-Donia.mp3',
-		img: 'media/img/Alleyezonme.jpeg',
+		title: 'Ahla Donia',
+		duration: '3:58',
+		src: './media/songs/2pac-Elissa-Arabic-Remix-Ahla-Donia.mp3',
+		img: './media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg',
 	},
 	{
 		id: 2,
 		artist: 'Outlandish',
 		album: 'Single',
-		track: 'Aicha',
-		length: '4:39',
-		path: '/media/songs/Aisha-Outlandish.mp3',
-		img: '/media/img/outlandish.jpg',
+		title: 'Aicha',
+		duration: '4:39',
+		src: './media/songs/Aisha-Outlandish.mp3',
+		img: './media/img/Aisha-Outlandish.jpg',
 	},
 	{
 		id: 3,
 		artist: 'Phil Collins',
 		album: 'Instrumental Mix',
-		track: 'In The Air Tonight',
-		length: '3:20',
-		path: '/media/songs/In-The-Air-Tonight-Instrumental-Mix.mp3',
-		img: '/media/img/phil.jpg',
+		title: 'In The Air Tonight',
+		duration: '3:20',
+		src: './media/songs/In-The-Air-Tonight-Instrumental-Mix.mp3',
+		img: './media/img/In-The-Air-Tonight-Instrumental-Mix.jpg',
 	},
 	{
 		id: 4,
 		artist: 'Nelly ft. Paul Wall',
 		album: 'Sweatsuit',
-		track: 'Grillz',
-		length: '4:32',
-		path: '/media/songs/Nelly-Grillz.mp3',
-		img: '/media/img/nelly.jpeg',
+		title: 'Grillz',
+		duration: '4:32',
+		src: './media/songs/Nelly-Grillz.mp3',
+		img: './media/img/Nelly-Grillz.jpeg',
 	},
 ];
 
 const APP = {
-	player: null,
+	playList: null,
 	audio: null,
 	playPauseBtn: null,
 	currentTrack: 0,
 	init: () => {
-		(APP.player = document.getElementById('player')),
+		(APP.playList = document.getElementById('playlist')),
 			(APP.audio = document.getElementById('audio')),
 			(APP.playPauseBtn = document.getElementById('play_pause_btn')),
 			APP.addListeners();
+		APP.buildTrackList();
 	},
 	addListeners: () => {
 		APP.playPauseBtn.addEventListener('click', APP.playTrack);
 	},
+
+	buildTrackList: () => {
+		// const fragment = new DocumentFragment();
+		APP.playList.innerHTML = '';
+
+		TRACKS.forEach(track => {
+			console.log(track.src);
+			const songCardDiv = document.createElement('div');
+			songCardDiv.className = 'song_card';
+			songCardDiv.id = track.id;
+
+			const img = document.createElement('img');
+			img.src = track.img;
+			img.className = 'thumbnail';
+			img.alt = 'thumbnail image';
+			songCardDiv.appendChild(img);
+
+			const cardTextDiv = document.createElement('div');
+			cardTextDiv.className = 'card_text';
+			songCardDiv.appendChild(cardTextDiv);
+
+			const pTitle = document.createElement('div');
+			pTitle.id = 'p_title';
+			pTitle.innerText = track.title;
+			cardTextDiv.appendChild(pTitle);
+
+			const pArtist = document.createElement('div');
+			pArtist.id = 'p_artist';
+			pArtist.innerText = track.artist;
+			cardTextDiv.appendChild(pArtist);
+
+			const playButton = document.createElement('button');
+			songCardDiv.appendChild(playButton);
+
+			const playIcon = document.createElement('i');
+			playIcon.classList.add('bx');
+			playIcon.classList.add('bx-play');
+			playButton.appendChild(playIcon);
+
+			APP.playList.appendChild(songCardDiv);
+		});
+
+		// APP.playList.append(fragment);
+	},
+
 	playTrack: ev => {
 		if (!APP.audio.paused) return; //already playing
 		APP.audio.src = TRACKS[APP.currentTrack].src;
 		APP.audio.play();
 		APP.startAnimations();
 	},
-	stopTrack: ev => {
+	pauseTrack: ev => {
 		APP.audio.pause();
-		APP.audio.currentTime = 0;
 		APP.stopAnimations();
 	},
 };
+
+document.addEventListener('DOMContentLoaded', APP.init);
