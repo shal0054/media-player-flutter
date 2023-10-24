@@ -239,7 +239,7 @@ body {
   justify-content: space-between;
 }
 #timer,
-#song_length {
+#track_duration {
   font-size: 1rem;
   padding: 0 0.4rem;
   min-width: 3.4rem;
