@@ -60,14 +60,14 @@ const APP = {
 	},
 	addListeners: () => {
 		APP.playPauseBtn.addEventListener('click', APP.playTrack);
+		APP.audio.addEventListener('durationchange', () => {});
 	},
 
 	buildTrackList: () => {
-		// const fragment = new DocumentFragment();
+		const fragment = new DocumentFragment();
 		APP.playList.innerHTML = '';
 
 		TRACKS.forEach(track => {
-			console.log(track.src);
 			const songCardDiv = document.createElement('div');
 			songCardDiv.className = 'song_card';
 			songCardDiv.id = track.id;
@@ -93,28 +93,33 @@ const APP = {
 			cardTextDiv.appendChild(pArtist);
 
 			const playButton = document.createElement('button');
+			playButton.className = 'play_btn';
+			playButton.dataset.id = track.id;
+			playButton.addEventListener('click', APP.playTrack);
 			songCardDiv.appendChild(playButton);
 
 			const playIcon = document.createElement('i');
 			playIcon.classList.add('bx');
 			playIcon.classList.add('bx-play');
+			playIcon.dataset.id = track.id;
 			playButton.appendChild(playIcon);
 
-			APP.playList.appendChild(songCardDiv);
+			fragment.appendChild(songCardDiv);
 		});
 
-		// APP.playList.append(fragment);
+		APP.playList.append(fragment);
 	},
 
 	playTrack: ev => {
 		if (!APP.audio.paused) return; //already playing
+		APP.currentTrack = ev.target.dataset.id;
 		APP.audio.src = TRACKS[APP.currentTrack].src;
 		APP.audio.play();
-		APP.startAnimations();
+		// APP.startAnimations();
 	},
 	pauseTrack: ev => {
 		APP.audio.pause();
-		APP.stopAnimations();
+		// APP.stopAnimations();
 	},
 };
 
