@@ -22,7 +22,7 @@
           <i id="mute_icon" data-vol="70" class="bx bx-volume-mute"></i>
         </div>
       </div>
-      <button onclick="playerListToggle()"><i id='menu_icon' class="bx bx-music"></i></button>
+      <button id="screen_toggle_btn"><i id='menu_icon' class="bx bx-music"></i></button>
     </div>
 
 
@@ -69,32 +69,6 @@
       </div>
     </section>
   </div>
-
-  <!------  javascript for UI only ------>
-  <script>
-    let playlist = document.querySelector('.playlist');
-    let volume = document.querySelector('.volume');
-    let menuIcon = document.getElementById('menu_icon');
-    let volumeLevel = document.getElementById('volume_level');
-
-
-    function playerListToggle() {
-      playlist.classList.toggle('active');
-      if (playlist.classList.contains('active')) {
-        menuIcon.className = '';
-        menuIcon.classList.add('bx');
-        menuIcon.classList.add('bx-music');
-      } else {
-        menuIcon.className = '';
-        menuIcon.classList.add('bx');
-        menuIcon.classList.add('bx-menu-alt-left');
-      }
-    }
-
-    function volumeTray() {
-      volume.classList.toggle('vol_slider_open');
-    }
-  </script>
   <audio id="audio"></audio>
   <script src="./js/index.js" defer></script>
 </body>

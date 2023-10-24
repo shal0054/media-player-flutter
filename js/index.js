@@ -48,6 +48,7 @@ const TRACKS = [
 
 const APP = {
 	playList: null,
+	screenToggleBtn: null,
 	audio: null,
 	playPauseBtn: null,
 	trackDurationText: null,
@@ -57,12 +58,13 @@ const APP = {
 			(APP.audio = document.getElementById('audio')),
 			(APP.playPauseBtn = document.getElementById('play_pause_btn')),
 			(APP.trackDurationText = document.getElementById('track_duration')),
+			(APP.screenToggleBtn = document.getElementById('screen_toggle_btn')),
 			APP.addListeners();
 		APP.buildTrackList();
 	},
 	addListeners: () => {
 		APP.playPauseBtn.addEventListener('click', APP.playTrack);
-		APP.audio.addEventListener('durationchange', () => {});
+		APP.screenToggleBtn.addEventListener('click', UI.playerListToggle);
 	},
 
 	buildTrackList: () => {
@@ -128,7 +130,7 @@ const APP = {
 		// APP.stopAnimations();
 	},
 
-	formatTime(seconds) {
+	formatTime: seconds => {
 		const SECONDS_PER_HOUR = 3600;
 		const SECONDS_PER_MINUTE = 60;
 
@@ -142,6 +144,31 @@ const APP = {
 		sec = sec.toString().padStart(2, '0');
 
 		return `${minutes}:${Math.floor(sec)}`;
+	},
+};
+
+const UI = {
+	playlist: document.querySelector('.playlist'),
+	volume: document.querySelector('.volume'),
+	menuIcon: document.getElementById('menu_icon'),
+
+	volumeLevel: document.getElementById('volume_level'),
+
+	playerListToggle() {
+		playlist.classList.toggle('active');
+		if (playlist.classList.contains('active')) {
+			menuIcon.className = '';
+			menuIcon.classList.add('bx');
+			menuIcon.classList.add('bx-music');
+		} else {
+			menuIcon.className = '';
+			menuIcon.classList.add('bx');
+			menuIcon.classList.add('bx-menu-alt-left');
+		}
+	},
+
+	volumeTray() {
+		volume.classList.toggle('vol_slider_open');
 	},
 };
 
