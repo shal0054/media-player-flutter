@@ -5,7 +5,7 @@ const TRACKS = [
 		album: 'Remix',
 		title: "Baby Don't Cry",
 		duration: '4:12',
-		src: './media/songs/2Pac-ft-Amr-Diab-Baby-Dont-Cry-Arabic.mp3',
+		src: './media/tracks/2Pac-ft-Amr-Diab-Baby-Dont-Cry-Arabic.mp3',
 		img: './media/img/2Pac-ft-Amr-Diab-Baby-Dont-Cry-Arabic.jpeg',
 	},
 	{
@@ -14,7 +14,7 @@ const TRACKS = [
 		album: 'Remix',
 		title: 'Ahla Donia',
 		duration: '3:58',
-		src: './media/songs/2pac-Elissa-Arabic-Remix-Ahla-Donia.mp3',
+		src: './media/tracks/2pac-Elissa-Arabic-Remix-Ahla-Donia.mp3',
 		img: './media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg',
 	},
 	{
@@ -23,7 +23,7 @@ const TRACKS = [
 		album: 'Single',
 		title: 'Aicha',
 		duration: '4:39',
-		src: './media/songs/Aisha-Outlandish.mp3',
+		src: './media/tracks/Aisha-Outlandish.mp3',
 		img: './media/img/Aisha-Outlandish.jpg',
 	},
 	{
@@ -32,7 +32,7 @@ const TRACKS = [
 		album: 'Instrumental Mix',
 		title: 'In The Air Tonight',
 		duration: '3:20',
-		src: './media/songs/In-The-Air-Tonight-Instrumental-Mix.mp3',
+		src: './media/tracks/In-The-Air-Tonight-Instrumental-Mix.mp3',
 		img: './media/img/In-The-Air-Tonight-Instrumental-Mix.jpg',
 	},
 	{
@@ -41,7 +41,7 @@ const TRACKS = [
 		album: 'Sweatsuit',
 		title: 'Grillz',
 		duration: '4:32',
-		src: './media/songs/Nelly-Grillz.mp3',
+		src: './media/tracks/Nelly-Grillz.mp3',
 		img: './media/img/Nelly-Grillz.jpeg',
 	},
 ];
@@ -72,19 +72,19 @@ const APP = {
 		APP.playList.innerHTML = '';
 
 		TRACKS.forEach(track => {
-			const songCardDiv = document.createElement('div');
-			songCardDiv.className = 'song_card';
-			songCardDiv.id = track.id;
+			const trackCardDiv = document.createElement('div');
+			trackCardDiv.className = 'track_card';
+			trackCardDiv.id = track.id;
 
 			const img = document.createElement('img');
 			img.src = track.img;
 			img.className = 'thumbnail';
 			img.alt = 'thumbnail image';
-			songCardDiv.appendChild(img);
+			trackCardDiv.appendChild(img);
 
 			const cardTextDiv = document.createElement('div');
 			cardTextDiv.className = 'card_text';
-			songCardDiv.appendChild(cardTextDiv);
+			trackCardDiv.appendChild(cardTextDiv);
 
 			const pTitle = document.createElement('div');
 			pTitle.id = 'p_title';
@@ -100,7 +100,7 @@ const APP = {
 			playButton.className = 'play_btn';
 			playButton.dataset.id = track.id;
 			playButton.addEventListener('click', APP.playTrack);
-			songCardDiv.appendChild(playButton);
+			trackCardDiv.appendChild(playButton);
 
 			const playIcon = document.createElement('i');
 			playIcon.classList.add('bx');
@@ -108,7 +108,7 @@ const APP = {
 			playIcon.dataset.id = track.id;
 			playButton.appendChild(playIcon);
 
-			fragment.appendChild(songCardDiv);
+			fragment.appendChild(trackCardDiv);
 		});
 
 		APP.playList.append(fragment);
@@ -119,10 +119,11 @@ const APP = {
 		if (!APP.audio.paused) return; //already playing
 		APP.currentTrack.id = ev.target.dataset.id;
 		APP.audio.src = TRACKS[APP.currentTrack.id].src;
-		APP.audio.addEventListener('durationchange', ev => {
+		APP.audio.addEventListener('durationchange', () => {
 			APP.currentTrack.duration = APP.formatTime(APP.audio.duration);
 			APP.trackDurationText.innerText = APP.currentTrack.duration;
 		});
+		UI.setTrackInfo();
 		// APP.audio.play();
 		// APP.startAnimations();
 	},
@@ -153,6 +154,15 @@ const UI = {
 	volume: document.querySelector('.volume'),
 	menuIcon: document.getElementById('menu_icon'),
 	volumeLevel: document.getElementById('volume_level'),
+	playerImg: document.getElementById('p_img'),
+	trackTitle: document.getElementById('track_title'),
+	artist: document.getElementById('artist'),
+
+	setTrackInfo() {
+		UI.playerImg.src = TRACKS[APP.currentTrack.id].img;
+		UI.trackTitle.textContent = TRACKS[APP.currentTrack.id].title;
+		UI.artist.textContent = TRACKS[APP.currentTrack.id].artist;
+	},
 
 	playerListToggle() {
 		UI.playlist.classList.toggle('active');
