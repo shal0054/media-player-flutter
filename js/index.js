@@ -87,7 +87,6 @@ const APP = {
 			const trackCardDiv = document.createElement('div');
 			trackCardDiv.className = 'track_card';
 			trackCardDiv.id = id;
-			id++;
 
 			const img = document.createElement('img');
 			img.src = track.img;
@@ -121,6 +120,7 @@ const APP = {
 			playIcon.dataset.id = track.id;
 			playButton.appendChild(playIcon);
 
+			id++;
 			fragment.appendChild(trackCardDiv);
 		});
 
