@@ -81,13 +81,7 @@ const APP = {
 		APP.screenToggleBtn.addEventListener('click', UI.playerListToggle);
 		APP.volumeBtn.addEventListener('click', UI.volumeTray);
 		APP.nextBtn.addEventListener('click', APP.playNext);
-		APP.previousBtn.addEventListener(
-			'click',
-			ev => {
-				console.log('CLICKED');
-			},
-			false
-		);
+		APP.previousBtn.addEventListener('click', APP.playPrevious, false);
 	},
 
 	buildTrackList: () => {
@@ -166,7 +160,7 @@ const APP = {
 		// APP.stopAnimations();
 	},
 
-	playNext: ev => {
+	playNext: () => {
 		if (APP.currentTrack.id >= 0) {
 			let nextId = parseInt(APP.currentTrack.id) + 1;
 
@@ -183,6 +177,30 @@ const APP = {
 			}
 
 			UI.highlightCard(nextCard);
+
+			APP.audio.play();
+		}
+	},
+
+	playPrevious: () => {
+		// is there an active track?
+		if (APP.currentTrack.id >= 0) {
+			// TODO: This should be try catch instead
+			let prevId = parseInt(APP.currentTrack.id) - 1;
+
+			if (prevId < 0) prevId = APP.playList.children.length - 1;
+			APP.currentTrack.id = prevId;
+
+			UI.setTrackInfo();
+
+			// find then highlight next track's card
+			let prevCard = null;
+			const cards = APP.playList.children;
+			for (let i = 0; i < cards.length; i++) {
+				if (parseInt(cards[i].id) === prevId) prevCard = cards[i];
+			}
+
+			UI.highlightCard(prevCard);
 
 			APP.audio.play();
 		}
@@ -206,7 +224,6 @@ const APP = {
 };
 
 const UI = {
-	// playlist: document.getElementById('playlist'),
 	menuIcon: document.getElementById('menu_icon'),
 	volume: document.querySelector('.volume'),
 	volumeLevel: document.getElementById('volume_level'),
