@@ -53,7 +53,9 @@ const APP = {
 	audio: null,
 	playPauseBtn: null,
 	trackDurationText: null,
-	currentTrack: { id: 0, duration: 0 },
+	nextBtn: null,
+	previousBtn: null,
+	currentTrack: { id: '', duration: 0 },
 	init: () => {
 		APP.playList = document.getElementById('playlist');
 		APP.audio = document.getElementById('audio');
@@ -61,8 +63,10 @@ const APP = {
 		APP.trackDurationText = document.getElementById('track_duration');
 		APP.screenToggleBtn = document.getElementById('screen_toggle_btn');
 		APP.volumeBtn = document.getElementById('volume_btn');
-		APP.addListeners();
+		APP.nextBtn = document.getElementById('next_btn');
+		APP.previousBtn = document.getElementById('previous_btn');
 		APP.buildTrackList();
+		APP.addListeners();
 	},
 	addListeners: () => {
 		APP.playPauseBtn.addEventListener('click', () => {
@@ -76,6 +80,14 @@ const APP = {
 		});
 		APP.screenToggleBtn.addEventListener('click', UI.playerListToggle);
 		APP.volumeBtn.addEventListener('click', UI.volumeTray);
+		APP.nextBtn.addEventListener('click', APP.playNext);
+		APP.previousBtn.addEventListener(
+			'click',
+			ev => {
+				console.log('CLICKED');
+			},
+			false
+		);
 	},
 
 	buildTrackList: () => {
@@ -110,14 +122,14 @@ const APP = {
 
 			const playButton = document.createElement('button');
 			playButton.className = 'play_btn';
-			playButton.dataset.id = track.id;
+			playButton.dataset.id = id;
 			playButton.addEventListener('click', APP.playTrack);
 			trackCardDiv.appendChild(playButton);
 
 			const playIcon = document.createElement('i');
 			playIcon.classList.add('bx');
 			playIcon.classList.add('bx-play');
-			playIcon.dataset.id = track.id;
+			playIcon.dataset.id = id;
 			playButton.appendChild(playIcon);
 
 			id++;
@@ -130,30 +142,50 @@ const APP = {
 	playTrack: ev => {
 		const trackId = ev.target.dataset.id;
 
-		if (UI.playlist.classList.contains('active')) UI.playerListToggle();
+		if (APP.playList.classList.contains('active')) UI.playerListToggle();
+
 		if (APP.currentTrack.id === trackId && !APP.audio.paused) return;
-		else if (APP.currentTrack.id === trackId) {
+		else if (APP.currentTrack.id === trackId && APP.audio.paused) {
 			APP.audio.play();
 			UI.togglePlayPauseIcon();
 			return;
 		}
 
 		APP.currentTrack.id = trackId;
-		APP.audio.src = TRACKS[APP.currentTrack.id].src;
-		APP.audio.addEventListener('durationchange', () => {
-			APP.currentTrack.duration = APP.formatTime(APP.audio.duration);
-			APP.trackDurationText.innerText = APP.currentTrack.duration;
-		});
+
 		UI.setTrackInfo();
 		UI.highlightCard(ev.target.closest('.track_card'));
 		APP.audio.play();
+
 		// APP.startAnimations();
 	},
 
-	pauseTrack: ev => {
+	pauseTrack: () => {
 		APP.audio.pause();
 		UI.togglePlayPauseIcon();
 		// APP.stopAnimations();
+	},
+
+	playNext: ev => {
+		if (APP.currentTrack.id >= 0) {
+			let nextId = parseInt(APP.currentTrack.id) + 1;
+
+			if (nextId >= APP.playList.children.length) nextId = 0;
+			APP.currentTrack.id = nextId;
+
+			UI.setTrackInfo();
+
+			// find then highlight next track's card
+			let nextCard = null;
+			const cards = APP.playList.children;
+			for (let i = 0; i < cards.length; i++) {
+				if (parseInt(cards[i].id) === nextId) nextCard = cards[i];
+			}
+
+			UI.highlightCard(nextCard);
+
+			APP.audio.play();
+		}
 	},
 
 	formatTime: seconds => {
@@ -174,7 +206,7 @@ const APP = {
 };
 
 const UI = {
-	playlist: document.getElementById('playlist'),
+	// playlist: document.getElementById('playlist'),
 	menuIcon: document.getElementById('menu_icon'),
 	volume: document.querySelector('.volume'),
 	volumeLevel: document.getElementById('volume_level'),
@@ -184,9 +216,15 @@ const UI = {
 	playPauseIcon: document.getElementById('play_pause_icon'),
 
 	setTrackInfo() {
-		UI.playerImg.src = TRACKS[APP.currentTrack.id].img;
-		UI.trackTitle.textContent = TRACKS[APP.currentTrack.id].title;
-		UI.artist.textContent = TRACKS[APP.currentTrack.id].artist;
+		const trackId = APP.currentTrack.id;
+		UI.playerImg.src = TRACKS[trackId].img;
+		UI.trackTitle.textContent = TRACKS[trackId].title;
+		UI.artist.textContent = TRACKS[trackId].artist;
+		APP.audio.src = TRACKS[APP.currentTrack.id].src;
+		APP.audio.addEventListener('durationchange', () => {
+			APP.currentTrack.duration = APP.formatTime(APP.audio.duration);
+			APP.trackDurationText.innerText = APP.currentTrack.duration;
+		});
 		UI.togglePlayPauseIcon();
 	},
 
@@ -202,7 +240,7 @@ const UI = {
 
 	highlightCard(trackCard) {
 		// remove .playing from all cards
-		const cards = UI.playlist.children;
+		const cards = APP.playList.children;
 		for (let i = 0; i < cards.length; i++) {
 			cards[i].classList.remove('playing');
 		}
@@ -212,8 +250,8 @@ const UI = {
 	},
 
 	playerListToggle() {
-		UI.playlist.classList.toggle('active');
-		if (UI.playlist.classList.contains('active')) {
+		APP.playList.classList.toggle('active');
+		if (APP.playList.classList.contains('active')) {
 			UI.menuIcon.className = '';
 			UI.menuIcon.classList.add('bx');
 			UI.menuIcon.classList.add('bx-music');
