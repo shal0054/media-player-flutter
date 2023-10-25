@@ -82,10 +82,12 @@ const APP = {
 		const fragment = new DocumentFragment();
 		APP.playList.innerHTML = '';
 
+		let id = 0;
 		TRACKS.forEach(track => {
 			const trackCardDiv = document.createElement('div');
 			trackCardDiv.className = 'track_card';
-			trackCardDiv.id = track.id;
+			trackCardDiv.id = id;
+			id++;
 
 			const img = document.createElement('img');
 			img.src = track.img;
