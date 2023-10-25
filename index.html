@@ -14,7 +14,7 @@
 
     <!-- top bar -->
     <div class="top_bar">
-      <button onclick="volumeTray()"><i class="bx bx-volume-full"></i></button>
+      <button id="volume_btn"><i class="bx bx-volume-full"></i></button>
       <div class="volume">
         <div class="volume_bar">
           <p id="volume_level">70%</p>
@@ -22,7 +22,7 @@
           <i id="mute_icon" data-vol="70" class="bx bx-volume-mute"></i>
         </div>
       </div>
-      <button onclick="playerListToggle()"><i id='menu_icon' class="bx bx-music"></i></button>
+      <button id="screen_toggle_btn"><i id='menu_icon' class="bx bx-music"></i></button>
     </div>
 
 
@@ -32,15 +32,15 @@
       <!-- player image -->
       <div class="image">
         <div class="img">
-          <img id="p_img" src="./media/img/music-note.png" alt="default img">
+          <img id="p_img" src="./media/img/music-note.png" alt="track img">
         </div>
       </div>
 
-      <!-- song info -->
+      <!-- track info -->
       <div class="controls">
-        <div class="song_info">
-          <p id="song_title">Song title</p>
-          <p id="artist">Artist name</p>
+        <div class="track_info">
+          <p id="track_title">Select a track</p>
+          <p id="artist"></p>
         </div>
 
         <!-- player controls -->
@@ -48,15 +48,15 @@
           <div class="range_slider">
             <p id="timer">0:00</p>
             <input id="slider" type="range" class="slider" min="0" max="100" value="0">
-            <p id="song_length">3:48</p>
+            <p id="track_duration">3:48</p>
           </div>
 
           <div class="main_btns">
-            <button id="previous"><i class='bx bx-skip-previous'></i></button>
-            <button id="rewind"><i class='bx bx-rewind'></i></button>
-            <button id="play_pause_btn"><i class='bx bx-play'></i></button>
-            <button id="fast_forward"><i class='bx bx-fast-forward'></i></button>
-            <button id="next"><i class='bx bx-skip-next'></i></button>
+            <button id="previous_btn"><i class='bx bx-skip-previous'></i></button>
+            <button id="rewind_btn"><i class='bx bx-rewind'></i></button>
+            <button id="play_pause_btn"><i id="play_pause_icon" class='bx bx-play'></i></button>
+            <button id="fast_forward_btn"><i class='bx bx-fast-forward'></i></button>
+            <button id="next_btn"><i class='bx bx-skip-next'></i></button>
           </div>
         </div>
       </div>
@@ -64,83 +64,12 @@
 
     <!------ playlist screen ------>
     <section>
-      <div class="playlist active">
-
-        <div id="0" class="song_card">
-          <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
-          <div class="card_text">
-            <p id="p_title">song name</p>
-            <p id="p_artist">artist name</p>
-          </div>
-          <button><i class='bx bx-play'></i></button>
-        </div>
-
-        <div id="1" class="song_card">
-          <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
-          <div class="card_text">
-            <p id="p_title">song name</p>
-            <p id="p_artist">artist name</p>
-          </div>
-          <button><i class='bx bx-play'></i></button>
-        </div>
-
-        <div id="2" class="song_card">
-          <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
-          <div class="card_text">
-            <p id="p_title">song name</p>
-            <p id="p_artist">artist name</p>
-          </div>
-          <button><i class='bx bx-play'></i></button>
-        </div>
-
-        <div id="3" class="song_card">
-          <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
-          <div class="card_text">
-            <p id="p_title">song name</p>
-            <p id="p_artist">artist name</p>
-          </div>
-          <button><i class='bx bx-play'></i></button>
-        </div>
-
-        <div id="4" class="song_card">
-          <img class="thumbnail" src="./media/img/2pac-Elissa-Arabic-Remix-Ahla-Donia.jpg" alt="thumbnail image">
-          <div class="card_text">
-            <p id="p_title">song name</p>
-            <p id="p_artist">artist name</p>
-          </div>
-          <button><i class='bx bx-play'></i></button>
-        </div>
-
+      <div id="playlist" class="playlist active">
       </div>
     </section>
   </div>
-
-  <!------  javascript for UI only ------>
-  <script>
-    let playlist = document.querySelector('.playlist');
-    let volume = document.querySelector('.volume');
-    let menuIcon = document.getElementById('menu_icon');
-    let volumeLevel = document.getElementById('volume_level');
-
-
-    function playerListToggle() {
-      playlist.classList.toggle('active');
-      if (playlist.classList.contains('active')) {
-        menuIcon.className = '';
-        menuIcon.classList.add('bx');
-        menuIcon.classList.add('bx-music');
-      } else {
-        menuIcon.className = '';
-        menuIcon.classList.add('bx');
-        menuIcon.classList.add('bx-menu-alt-left');
-      }
-    }
-
-    function volumeTray() {
-      volume.classList.toggle('vol_slider_open');
-    }
-  </script>
   <audio id="audio"></audio>
+  <script src="./js/index.js" defer></script>
 </body>
 
 </html>

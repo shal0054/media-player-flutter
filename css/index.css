@@ -93,16 +93,16 @@ body {
   align-items: center;
   flex-direction: column;
 }
-.main .controls .song_info {
+.main .controls .track_info {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
-.main .controls .song_info p {
+.main .controls .track_info p {
   font-size: 14px;
 }
-.main .controls .song_info p:first-child {
+.main .controls .track_info p:first-child {
   font-size: 22px;
   text-transform: capitalize;
 }
@@ -168,7 +168,7 @@ body {
   flex-direction: column;
   max-width: 8.5rem;
 }
-.playlist .song_card {
+.playlist .track_card {
   width: 80%;
   display: flex;
   gap: .5rem;
@@ -179,20 +179,20 @@ body {
   padding: 12px 12px 20px 12px;
   box-shadow: 0.1px 8px 8px 2px rgba(0, 0, 0, 0.1);
 }
-.playlist .song_card:not(:first-child) {
+.playlist .track_card:not(:first-child) {
   margin-top: 1rem;
 }
-.playlist .song_card #p_title {
+.playlist .track_card #p_title {
   font-size: 1.2rem;
   width: 85%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.playlist .song_card #p_artist {
+.playlist .track_card #p_artist {
   font-size: .8rem;
 }
-.playlist .song_card button {
+.playlist .track_card button {
   height: 35px;
   min-width: 35px;
   border-radius: 50%;
@@ -239,7 +239,7 @@ body {
   justify-content: space-between;
 }
 #timer,
-#song_length {
+#track_duration {
   font-size: 1rem;
   padding: 0 0.4rem;
   min-width: 3.4rem;
