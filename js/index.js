@@ -58,6 +58,7 @@ const APP = {
 	previousBtn: null,
 	fastForwardBtn: null,
 	rewindBtn: null,
+	progressBar: null,
 	currentTrack: { id: '', duration: 0 },
 	init: () => {
 		APP.playList = document.getElementById('playlist');
@@ -71,6 +72,7 @@ const APP = {
 		APP.fastForwardBtn = document.getElementById('fast_forward_btn');
 		APP.rewindBtn = document.getElementById('rewind_btn');
 		APP.timerText = document.getElementById('timer');
+		APP.progressBar = document.getElementById('slider');
 		APP.buildTrackList();
 		APP.addListeners();
 	},
@@ -166,6 +168,9 @@ const APP = {
 
 	updateTimer: () => {
 		APP.timerText.textContent = APP.formatTime(APP.audio.currentTime);
+
+		let percentTime = (APP.audio.currentTime / APP.audio.duration) * 100;
+		APP.progressBar.value = percentTime;
 	},
 
 	pauseTrack: () => {
