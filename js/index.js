@@ -79,6 +79,8 @@ const APP = {
 		APP.progressBar = document.getElementById('slider');
 		APP.buildTrackList();
 		APP.addListeners();
+
+		APP.audio.volume = 0.7;
 	},
 	addListeners: () => {
 		APP.playPauseBtn.addEventListener('click', () => {
@@ -240,6 +242,8 @@ const APP = {
 
 	setVolume: () => {
 		APP.volumeLevelText.textContent = APP.volumeSlider.value + '%';
+
+		APP.audio.volume = APP.volumeSlider.value / 100;
 	},
 
 	formatTime: seconds => {
