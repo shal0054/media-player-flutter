@@ -53,6 +53,7 @@ const APP = {
 	audio: null,
 	playPauseBtn: null,
 	trackDurationText: null,
+	timerText: null,
 	nextBtn: null,
 	previousBtn: null,
 	fastForwardBtn: null,
@@ -69,6 +70,7 @@ const APP = {
 		APP.previousBtn = document.getElementById('previous_btn');
 		APP.fastForwardBtn = document.getElementById('fast_forward_btn');
 		APP.rewindBtn = document.getElementById('rewind_btn');
+		APP.timerText = document.getElementById('timer');
 		APP.buildTrackList();
 		APP.addListeners();
 	},
@@ -85,9 +87,11 @@ const APP = {
 		APP.screenToggleBtn.addEventListener('click', UI.playerListToggle);
 		APP.volumeBtn.addEventListener('click', UI.volumeTray);
 		APP.nextBtn.addEventListener('click', APP.playNext);
+		APP.audio.addEventListener('ended', APP.playNext);
 		APP.previousBtn.addEventListener('click', APP.playPrevious);
 		APP.fastForwardBtn.addEventListener('click', APP.fastForward);
 		APP.rewindBtn.addEventListener('click', APP.rewind);
+		APP.audio.addEventListener('timeupdate', APP.updateTimer, false);
 	},
 
 	buildTrackList: () => {
@@ -158,6 +162,10 @@ const APP = {
 		APP.audio.play();
 
 		// APP.startAnimations();
+	},
+
+	updateTimer: () => {
+		APP.timerText.textContent = APP.formatTime(APP.audio.currentTime);
 	},
 
 	pauseTrack: () => {
@@ -231,9 +239,9 @@ const APP = {
 		let sec = seconds - minutes * SECONDS_PER_MINUTE - hours * SECONDS_PER_HOUR;
 
 		minutes = minutes.toString().padStart(2, '0');
-		sec = sec.toString().padStart(2, '0');
+		sec = Math.floor(sec).toString().padStart(2, '0');
 
-		return `${minutes}:${Math.floor(sec)}`;
+		return `${minutes}:${sec}`;
 	},
 };
 
