@@ -48,23 +48,26 @@ const TRACKS = [
 
 const APP = {
 	playList: null,
+	volumeBtn: null,
 	screenToggleBtn: null,
 	audio: null,
 	playPauseBtn: null,
 	trackDurationText: null,
 	currentTrack: { id: 0, duration: 0 },
 	init: () => {
-		(APP.playList = document.getElementById('playlist')),
-			(APP.audio = document.getElementById('audio')),
-			(APP.playPauseBtn = document.getElementById('play_pause_btn')),
-			(APP.trackDurationText = document.getElementById('track_duration')),
-			(APP.screenToggleBtn = document.getElementById('screen_toggle_btn')),
-			APP.addListeners();
+		APP.playList = document.getElementById('playlist');
+		APP.audio = document.getElementById('audio');
+		APP.playPauseBtn = document.getElementById('play_pause_btn');
+		APP.trackDurationText = document.getElementById('track_duration');
+		APP.screenToggleBtn = document.getElementById('screen_toggle_btn');
+		APP.volumeBtn = document.getElementById('volume_btn');
+		APP.addListeners();
 		APP.buildTrackList();
 	},
 	addListeners: () => {
 		APP.playPauseBtn.addEventListener('click', APP.playTrack);
 		APP.screenToggleBtn.addEventListener('click', UI.playerListToggle);
+		APP.volumeBtn.addEventListener('click', UI.volumeTray);
 	},
 
 	buildTrackList: () => {
@@ -151,8 +154,8 @@ const APP = {
 
 const UI = {
 	playlist: document.getElementById('playlist'),
-	volume: document.querySelector('.volume'),
 	menuIcon: document.getElementById('menu_icon'),
+	volume: document.querySelector('.volume'),
 	volumeLevel: document.getElementById('volume_level'),
 	playerImg: document.getElementById('p_img'),
 	trackTitle: document.getElementById('track_title'),
