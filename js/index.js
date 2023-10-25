@@ -115,6 +115,7 @@ const APP = {
 	},
 
 	playTrack: ev => {
+		if (UI.playlist.classList.contains('active')) UI.playerListToggle();
 		if (!APP.audio.paused) return; //already playing
 		APP.currentTrack.id = ev.target.dataset.id;
 		APP.audio.src = TRACKS[APP.currentTrack.id].src;
@@ -148,27 +149,26 @@ const APP = {
 };
 
 const UI = {
-	playlist: document.querySelector('.playlist'),
+	playlist: document.getElementById('playlist'),
 	volume: document.querySelector('.volume'),
 	menuIcon: document.getElementById('menu_icon'),
-
 	volumeLevel: document.getElementById('volume_level'),
 
 	playerListToggle() {
-		playlist.classList.toggle('active');
-		if (playlist.classList.contains('active')) {
-			menuIcon.className = '';
-			menuIcon.classList.add('bx');
-			menuIcon.classList.add('bx-music');
+		UI.playlist.classList.toggle('active');
+		if (UI.playlist.classList.contains('active')) {
+			UI.menuIcon.className = '';
+			UI.menuIcon.classList.add('bx');
+			UI.menuIcon.classList.add('bx-music');
 		} else {
-			menuIcon.className = '';
-			menuIcon.classList.add('bx');
-			menuIcon.classList.add('bx-menu-alt-left');
+			UI.menuIcon.className = '';
+			UI.menuIcon.classList.add('bx');
+			UI.menuIcon.classList.add('bx-menu-alt-left');
 		}
 	},
 
 	volumeTray() {
-		volume.classList.toggle('vol_slider_open');
+		UI.volume.classList.toggle('vol_slider_open');
 	},
 };
 
