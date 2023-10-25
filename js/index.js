@@ -49,6 +49,8 @@ const TRACKS = [
 const APP = {
 	playList: null,
 	volumeBtn: null,
+	volumeSlider: null,
+	volumeLevelText: null,
 	screenToggleBtn: null,
 	audio: null,
 	playPauseBtn: null,
@@ -67,6 +69,8 @@ const APP = {
 		APP.trackDurationText = document.getElementById('track_duration');
 		APP.screenToggleBtn = document.getElementById('screen_toggle_btn');
 		APP.volumeBtn = document.getElementById('volume_btn');
+		APP.volumeSlider = document.getElementById('volume_slider');
+		APP.volumeLevelText = document.getElementById('volume_level');
 		APP.nextBtn = document.getElementById('next_btn');
 		APP.previousBtn = document.getElementById('previous_btn');
 		APP.fastForwardBtn = document.getElementById('fast_forward_btn');
@@ -88,6 +92,7 @@ const APP = {
 		});
 		APP.screenToggleBtn.addEventListener('click', UI.playerListToggle);
 		APP.volumeBtn.addEventListener('click', UI.volumeTray);
+		APP.volumeSlider.addEventListener('input', APP.setVolume);
 		APP.nextBtn.addEventListener('click', APP.playNext);
 		APP.audio.addEventListener('ended', APP.playNext);
 		APP.previousBtn.addEventListener('click', APP.playPrevious);
@@ -231,6 +236,10 @@ const APP = {
 
 	rewind: () => {
 		APP.audio.currentTime = APP.audio.currentTime - 10;
+	},
+
+	setVolume: () => {
+		APP.volumeLevelText.textContent = APP.volumeSlider.value + '%';
 	},
 
 	formatTime: seconds => {
