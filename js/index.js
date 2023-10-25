@@ -134,6 +134,7 @@ const APP = {
 			APP.trackDurationText.innerText = APP.currentTrack.duration;
 		});
 		UI.setTrackInfo();
+		UI.highlightCard(ev.target.closest('.track_card'));
 		APP.audio.play();
 		// APP.startAnimations();
 	},
@@ -178,6 +179,17 @@ const UI = {
 		UI.artist.textContent = TRACKS[APP.currentTrack.id].artist;
 		UI.playPauseIcon.classList.remove('bx-play');
 		UI.playPauseIcon.classList.add('bx-pause');
+	},
+
+	highlightCard(trackCard) {
+		// remove .playing from all cards
+		const cards = UI.playlist.children;
+		for (let i = 0; i < cards.length; i++) {
+			cards[i].classList.remove('playing');
+		}
+
+		// add .playing to the active card only
+		trackCard.classList.add('playing');
 	},
 
 	playerListToggle() {
