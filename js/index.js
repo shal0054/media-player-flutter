@@ -126,8 +126,17 @@ const APP = {
 	},
 
 	playTrack: ev => {
+		const trackId = ev.target.dataset.id;
+
 		if (UI.playlist.classList.contains('active')) UI.playerListToggle();
-		APP.currentTrack.id = ev.target.dataset.id;
+		if (APP.currentTrack.id === trackId && !APP.audio.paused) return;
+		else if (APP.currentTrack.id === trackId) {
+			APP.audio.play();
+			UI.togglePlayPauseIcon();
+			return;
+		}
+
+		APP.currentTrack.id = trackId;
 		APP.audio.src = TRACKS[APP.currentTrack.id].src;
 		APP.audio.addEventListener('durationchange', () => {
 			APP.currentTrack.duration = APP.formatTime(APP.audio.duration);
@@ -141,8 +150,7 @@ const APP = {
 
 	pauseTrack: ev => {
 		APP.audio.pause();
-		UI.playPauseIcon.classList.remove('bx-pause');
-		UI.playPauseIcon.classList.add('bx-play');
+		UI.togglePlayPauseIcon();
 		// APP.stopAnimations();
 	},
 
@@ -177,8 +185,17 @@ const UI = {
 		UI.playerImg.src = TRACKS[APP.currentTrack.id].img;
 		UI.trackTitle.textContent = TRACKS[APP.currentTrack.id].title;
 		UI.artist.textContent = TRACKS[APP.currentTrack.id].artist;
-		UI.playPauseIcon.classList.remove('bx-play');
-		UI.playPauseIcon.classList.add('bx-pause');
+		UI.togglePlayPauseIcon();
+	},
+
+	togglePlayPauseIcon() {
+		if (UI.playPauseIcon.classList.contains('bx-play')) {
+			UI.playPauseIcon.classList.remove('bx-play');
+			UI.playPauseIcon.classList.add('bx-pause');
+		} else {
+			UI.playPauseIcon.classList.remove('bx-pause');
+			UI.playPauseIcon.classList.add('bx-play');
+		}
 	},
 
 	highlightCard(trackCard) {
