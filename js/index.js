@@ -65,7 +65,15 @@ const APP = {
 		APP.buildTrackList();
 	},
 	addListeners: () => {
-		APP.playPauseBtn.addEventListener('click', APP.playTrack);
+		APP.playPauseBtn.addEventListener('click', () => {
+			if (APP.audio.paused) {
+				APP.audio.play();
+				UI.playPauseIcon.classList.remove('bx-play');
+				UI.playPauseIcon.classList.add('bx-pause');
+			} else {
+				APP.pauseTrack();
+			}
+		});
 		APP.screenToggleBtn.addEventListener('click', UI.playerListToggle);
 		APP.volumeBtn.addEventListener('click', UI.volumeTray);
 	},
@@ -119,7 +127,6 @@ const APP = {
 
 	playTrack: ev => {
 		if (UI.playlist.classList.contains('active')) UI.playerListToggle();
-		if (!APP.audio.paused) return; //already playing
 		APP.currentTrack.id = ev.target.dataset.id;
 		APP.audio.src = TRACKS[APP.currentTrack.id].src;
 		APP.audio.addEventListener('durationchange', () => {
@@ -127,11 +134,14 @@ const APP = {
 			APP.trackDurationText.innerText = APP.currentTrack.duration;
 		});
 		UI.setTrackInfo();
-		// APP.audio.play();
+		APP.audio.play();
 		// APP.startAnimations();
 	},
+
 	pauseTrack: ev => {
 		APP.audio.pause();
+		UI.playPauseIcon.classList.remove('bx-pause');
+		UI.playPauseIcon.classList.add('bx-play');
 		// APP.stopAnimations();
 	},
 
@@ -160,11 +170,14 @@ const UI = {
 	playerImg: document.getElementById('p_img'),
 	trackTitle: document.getElementById('track_title'),
 	artist: document.getElementById('artist'),
+	playPauseIcon: document.getElementById('play_pause_icon'),
 
 	setTrackInfo() {
 		UI.playerImg.src = TRACKS[APP.currentTrack.id].img;
 		UI.trackTitle.textContent = TRACKS[APP.currentTrack.id].title;
 		UI.artist.textContent = TRACKS[APP.currentTrack.id].artist;
+		UI.playPauseIcon.classList.remove('bx-play');
+		UI.playPauseIcon.classList.add('bx-pause');
 	},
 
 	playerListToggle() {
