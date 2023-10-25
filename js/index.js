@@ -55,6 +55,8 @@ const APP = {
 	trackDurationText: null,
 	nextBtn: null,
 	previousBtn: null,
+	fastForwardBtn: null,
+	rewindBtn: null,
 	currentTrack: { id: '', duration: 0 },
 	init: () => {
 		APP.playList = document.getElementById('playlist');
@@ -65,6 +67,8 @@ const APP = {
 		APP.volumeBtn = document.getElementById('volume_btn');
 		APP.nextBtn = document.getElementById('next_btn');
 		APP.previousBtn = document.getElementById('previous_btn');
+		APP.fastForwardBtn = document.getElementById('fast_forward_btn');
+		APP.rewindBtn = document.getElementById('rewind_btn');
 		APP.buildTrackList();
 		APP.addListeners();
 	},
@@ -81,7 +85,9 @@ const APP = {
 		APP.screenToggleBtn.addEventListener('click', UI.playerListToggle);
 		APP.volumeBtn.addEventListener('click', UI.volumeTray);
 		APP.nextBtn.addEventListener('click', APP.playNext);
-		APP.previousBtn.addEventListener('click', APP.playPrevious, false);
+		APP.previousBtn.addEventListener('click', APP.playPrevious);
+		APP.fastForwardBtn.addEventListener('click', APP.fastForward);
+		APP.rewindBtn.addEventListener('click', APP.rewind);
 	},
 
 	buildTrackList: () => {
@@ -204,6 +210,14 @@ const APP = {
 
 			APP.audio.play();
 		}
+	},
+
+	fastForward: () => {
+		APP.audio.currentTime = APP.audio.currentTime + 10;
+	},
+
+	rewind: () => {
+		APP.audio.currentTime = APP.audio.currentTime - 10;
 	},
 
 	formatTime: seconds => {
