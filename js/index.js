@@ -103,7 +103,8 @@ const APP = {
 		APP.previousBtn.addEventListener('click', APP.playPrevious);
 		APP.fastForwardBtn.addEventListener('click', APP.fastForward);
 		APP.rewindBtn.addEventListener('click', APP.rewind);
-		APP.audio.addEventListener('timeupdate', APP.updateTimer, false);
+		APP.audio.addEventListener('timeupdate', APP.updateTimer);
+		APP.progressBar.addEventListener('input', APP.updateProgress);
 	},
 
 	buildTrackList: () => {
@@ -181,6 +182,11 @@ const APP = {
 
 		let percentTime = (APP.audio.currentTime / APP.audio.duration) * 100;
 		APP.progressBar.value = percentTime;
+	},
+
+	updateProgress: ev => {
+		const inputTime = (ev.target.value / 100) * APP.audio.duration;
+		APP.audio.currentTime = inputTime;
 	},
 
 	pauseTrack: () => {
