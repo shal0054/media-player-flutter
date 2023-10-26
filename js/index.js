@@ -51,6 +51,7 @@ const APP = {
 	volumeBtn: null,
 	volumeSlider: null,
 	volumeLevelText: null,
+	muteIcon: null,
 	screenToggleBtn: null,
 	audio: null,
 	playPauseBtn: null,
@@ -71,6 +72,7 @@ const APP = {
 		APP.volumeBtn = document.getElementById('volume_btn');
 		APP.volumeSlider = document.getElementById('volume_slider');
 		APP.volumeLevelText = document.getElementById('volume_level');
+		APP.muteIcon = document.getElementById('mute_icon');
 		APP.nextBtn = document.getElementById('next_btn');
 		APP.previousBtn = document.getElementById('previous_btn');
 		APP.fastForwardBtn = document.getElementById('fast_forward_btn');
@@ -95,6 +97,7 @@ const APP = {
 		APP.screenToggleBtn.addEventListener('click', UI.playerListToggle);
 		APP.volumeBtn.addEventListener('click', UI.volumeTray);
 		APP.volumeSlider.addEventListener('input', APP.setVolume);
+		APP.muteIcon.addEventListener('click', APP.toggleMute);
 		APP.nextBtn.addEventListener('click', APP.playNext);
 		APP.audio.addEventListener('ended', APP.playNext);
 		APP.previousBtn.addEventListener('click', APP.playPrevious);
@@ -244,6 +247,16 @@ const APP = {
 		APP.volumeLevelText.textContent = APP.volumeSlider.value + '%';
 
 		APP.audio.volume = APP.volumeSlider.value / 100;
+	},
+
+	toggleMute: () => {
+		if (APP.audio.muted) {
+			APP.audio.muted = false;
+			APP.muteIcon.classList.remove('muted');
+		} else {
+			APP.audio.muted = true;
+			APP.muteIcon.classList.add('muted');
+		}
 	},
 
 	formatTime: seconds => {
