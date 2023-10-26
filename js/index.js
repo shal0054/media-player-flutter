@@ -49,6 +49,9 @@ const TRACKS = [
 const APP = {
 	playList: null,
 	volumeBtn: null,
+	volumeSlider: null,
+	volumeLevelText: null,
+	muteIcon: null,
 	screenToggleBtn: null,
 	audio: null,
 	playPauseBtn: null,
@@ -67,6 +70,9 @@ const APP = {
 		APP.trackDurationText = document.getElementById('track_duration');
 		APP.screenToggleBtn = document.getElementById('screen_toggle_btn');
 		APP.volumeBtn = document.getElementById('volume_btn');
+		APP.volumeSlider = document.getElementById('volume_slider');
+		APP.volumeLevelText = document.getElementById('volume_level');
+		APP.muteIcon = document.getElementById('mute_icon');
 		APP.nextBtn = document.getElementById('next_btn');
 		APP.previousBtn = document.getElementById('previous_btn');
 		APP.fastForwardBtn = document.getElementById('fast_forward_btn');
@@ -75,6 +81,8 @@ const APP = {
 		APP.progressBar = document.getElementById('slider');
 		APP.buildTrackList();
 		APP.addListeners();
+
+		APP.audio.volume = 0.7;
 	},
 	addListeners: () => {
 		APP.playPauseBtn.addEventListener('click', () => {
@@ -88,12 +96,15 @@ const APP = {
 		});
 		APP.screenToggleBtn.addEventListener('click', UI.playerListToggle);
 		APP.volumeBtn.addEventListener('click', UI.volumeTray);
+		APP.volumeSlider.addEventListener('input', APP.setVolume);
+		APP.muteIcon.addEventListener('click', APP.toggleMute);
 		APP.nextBtn.addEventListener('click', APP.playNext);
 		APP.audio.addEventListener('ended', APP.playNext);
 		APP.previousBtn.addEventListener('click', APP.playPrevious);
 		APP.fastForwardBtn.addEventListener('click', APP.fastForward);
 		APP.rewindBtn.addEventListener('click', APP.rewind);
-		APP.audio.addEventListener('timeupdate', APP.updateTimer, false);
+		APP.audio.addEventListener('timeupdate', APP.updateTimer);
+		APP.progressBar.addEventListener('input', APP.updateProgress);
 	},
 
 	buildTrackList: () => {
@@ -173,6 +184,11 @@ const APP = {
 		APP.progressBar.value = percentTime;
 	},
 
+	updateProgress: ev => {
+		const inputTime = (ev.target.value / 100) * APP.audio.duration;
+		APP.audio.currentTime = inputTime;
+	},
+
 	pauseTrack: () => {
 		APP.audio.pause();
 		UI.togglePlayPauseIcon();
@@ -231,6 +247,22 @@ const APP = {
 
 	rewind: () => {
 		APP.audio.currentTime = APP.audio.currentTime - 10;
+	},
+
+	setVolume: () => {
+		APP.volumeLevelText.textContent = APP.volumeSlider.value + '%';
+
+		APP.audio.volume = APP.volumeSlider.value / 100;
+	},
+
+	toggleMute: () => {
+		if (APP.audio.muted) {
+			APP.audio.muted = false;
+			APP.muteIcon.classList.remove('muted');
+		} else {
+			APP.audio.muted = true;
+			APP.muteIcon.classList.add('muted');
+		}
 	},
 
 	formatTime: seconds => {
