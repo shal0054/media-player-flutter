@@ -173,8 +173,6 @@ const APP = {
 		UI.setTrackInfo();
 		UI.highlightCard(ev.target.closest('.track_card'));
 		APP.audio.play();
-
-		// APP.startAnimations();
 	},
 
 	updateTimer: () => {
