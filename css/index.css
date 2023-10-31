@@ -150,7 +150,7 @@ body {
   height: 100%;
   background: #566573;
   max-height: 22vh;
-  overflow: hidden;
+  overflow: scroll;
   transition: 0.65s;
   display: flex;
   align-items: center;
