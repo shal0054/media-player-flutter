@@ -112,7 +112,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 135%;
+  width: 140%;
 }
 .main .controls .control_buttons .main_btns {
   display: flex;
@@ -149,7 +149,7 @@ body {
   width: 100%;
   height: 100%;
   background: #566573;
-  max-height: 18vh;
+  max-height: 22vh;
   overflow: hidden;
   transition: 0.65s;
   display: flex;
