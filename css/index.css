@@ -149,7 +149,7 @@ body {
   width: 100%;
   height: 100%;
   background: #566573;
-  max-height: 24vh;
+  max-height: 25vh;
   overflow: scroll;
   transition: 0.65s;
   display: flex;
