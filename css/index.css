@@ -112,13 +112,13 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 130%;
+  width: 100%;
 }
 .main .controls .control_buttons .main_btns {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 2rem;
   width: 74%;
 }
 .main .controls .control_buttons .main_btns button {
